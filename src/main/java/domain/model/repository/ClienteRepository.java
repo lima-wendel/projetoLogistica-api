@@ -9,4 +9,7 @@ import domain.model.Cliente;
 //componente do Spring: tipo gerenciado pelo container do Spring, facilitando a injeção de instâncias em objetos de outras classes
 public interface ClienteRepository extends JpaRepository<Cliente, Long>{
 
+	
+	//extends JpaRepository<Cliente, Long> automaticamente adiciona diversas funcionalidades ao repositório
+	//para consultar e gerenciar a entidade Cliente
 }
