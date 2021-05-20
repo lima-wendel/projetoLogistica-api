@@ -1,5 +1,7 @@
 package domain.model.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,4 +14,11 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long>{
 	
 	//extends JpaRepository<Cliente, Long> automaticamente adiciona diversas funcionalidades ao repositório
 	//para consultar e gerenciar a entidade Cliente
+	
+	//declarar método que retorna um List
+	//o Spring Data JPA fornece uma implementação de busca por nome em tempo de execução
+	List<Cliente> findByName(String nome);
+	List<Cliente> findByNameContaining(String nome);
+	
+	
 }
