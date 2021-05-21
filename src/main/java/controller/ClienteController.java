@@ -2,12 +2,15 @@ package controller;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import domain.model.Cliente;
@@ -38,7 +41,31 @@ public class ClienteController {
 	@GetMapping ("/clientes")//vai mapear o endpoint /clientes e resolver o método, mas só funciona com a marcação RestController
 	public List<Cliente> listar() {
 		return clienteRepository.findAll();
+	}
 		
+	//método que retorna apenas um cliente e não uma lista
+	@GetMapping("/clientes/{clienteId}")
+	public ResponseEntity<Cliente> buscar(@PathVariable Long clienteId) {
+		return clienteRepository.findById(clienteId)
+			//  .map(cliente -> ResponseEntity.ok(cliente));
+				.map(ResponseEntity::ok) //retorna 200
+				.orElse(ResponseEntity.notFound().build()); //retorna 404
+		
+	}
+		
+/*		
+		Optional<Cliente> cliente = clienteRepository.findById(clienteId);
+		
+		//retorna código 200
+		if (cliente.isPresent()) {
+			return ResponseEntity.ok(cliente.get());
+		}
+		
+		//retorna código 404
+		return ResponseEntity.notFound().build();
+	}
+	
+*/
 		
 		//return manager.createQuery("from Cliente", Cliente.class) //"from Cliente", "Cliente.class" é uma jpql, linguagem de consulta do Jakarta Persistence
 		//		.getResultList();
@@ -58,6 +85,6 @@ public class ClienteController {
 		
 		return Arrays.asList(cliente1, cliente2);
 */
-	}
+	
 
 }
