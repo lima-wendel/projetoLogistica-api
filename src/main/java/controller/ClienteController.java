@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -63,14 +64,14 @@ public class ClienteController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED) //retorna 201 para uma cliente salvo
 	//o @REsponseBody vai transformar o JSON da requisição em objeto Java
-	public Cliente adicionar(@RequestBody Cliente cliente) {
+	public Cliente adicionar(@Valid @RequestBody Cliente cliente) {
 		return clienteRepository.save(cliente);
 		
 	}
 	
 	
 	@PutMapping("/{clienteId}")
-	public ResponseEntity<Cliente> atualizar (@PathVariable Long clienteId, @RequestBody Cliente cliente) {
+	public ResponseEntity<Cliente> atualizar (@PathVariable Long clienteId, @Valid @RequestBody Cliente cliente) {
 		if (!clienteRepository.existsById(clienteId)) {
 			return ResponseEntity.notFound().build();
 		}
