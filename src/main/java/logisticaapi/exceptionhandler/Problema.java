@@ -3,9 +3,6 @@ package logisticaapi.exceptionhandler;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 
 public class Problema {
 	
@@ -13,12 +10,20 @@ public class Problema {
 	private LocalDateTime dataHora;
 	private String titulo;
 	private List<Campo> campos;
-	
-	@AllArgsConstructor
-	@Getter
+
+
 	public static class Campo {
 		private String nome;
 		private String mensagem;
+		
+		
+		public Campo(String nome, String mensagem) {
+			super();
+			this.nome = nome;
+			this.mensagem = mensagem;
+		}
+		public String getNome() { return nome; }
+		public String getMensagem() { return mensagem; }
 	}
 	
 	
@@ -28,5 +33,10 @@ public class Problema {
 	public void setDataHora(LocalDateTime dataHora) { this.dataHora = dataHora; }
 	public String getTitulo() { return titulo; }
 	public void setTitulo(String titulo) { this.titulo = titulo; }
+	public List<Campo> getCampos() { return campos; }
+	public void setCampos(List<Campo> campos) { this.campos = campos; }
 
+	
+	
+	
 }
