@@ -14,8 +14,11 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import domain.exception.NegocioException;
 
 @ControllerAdvice //trata exceções de forma global em todos os controladores
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
@@ -45,4 +48,16 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 		return handleExceptionInternal(ex, problema, headers, status, request);
 	}
 
+	//método que trata a resposta de NegocioException
+	@ExceptionHandler(NegocioException.class)
+	public ResponseEntity<Object> handleNegocio (NegocioException ex, WebRequest request) {
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		
+		Problema problema = new Problema();
+		problema.setStatus(status.value());
+		problema.setDataHora(LocalDateTime.now());
+		problema.setTitulo(ex.getMessage());
+		
+		return handleExceptionInternal (ex, problema, new HttpHeaders(), status, request);
+	}
 }
