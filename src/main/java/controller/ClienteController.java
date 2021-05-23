@@ -1,14 +1,8 @@
 package controller;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,12 +11,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import domain.model.Cliente;
 import domain.model.repository.ClienteRepository;
+import domain.service.CatalogoClienteService;
 import lombok.AllArgsConstructor;
 
 
@@ -37,6 +31,7 @@ public class ClienteController {
 //	private ClienteRepository clienteRepository;
 	
 	private ClienteRepository clienteRepository;
+	private CatalogoClienteService catalogoClienteService;
 	
 	//construtor using fields... alternativa ao @Autowired
 	public ClienteController(ClienteRepository clienteRepository) {
@@ -65,7 +60,8 @@ public class ClienteController {
 	@ResponseStatus(HttpStatus.CREATED) //retorna 201 para uma cliente salvo
 	//o @REsponseBody vai transformar o JSON da requisição em objeto Java
 	public Cliente adicionar(@Valid @RequestBody Cliente cliente) {
-		return clienteRepository.save(cliente);
+//		return clienteRepository.save(cliente);
+		return catalogoClienteService.salvar(cliente);
 		
 	}
 	
@@ -78,7 +74,8 @@ public class ClienteController {
 		
 		//atualizar cliente
 		cliente.setId(clienteId);
-		cliente = clienteRepository.save(cliente);
+//		cliente = clienteRepository.save(cliente);
+		cliente = catalogoClienteService.salvar(cliente);
 		
 		return ResponseEntity.ok(cliente); 
 		
@@ -91,7 +88,8 @@ public class ClienteController {
 			return ResponseEntity.notFound().build();
 		}
 		
-		clienteRepository.deleteById(clienteId);
+//		clienteRepository.deleteById(clienteId);
+		catalogoClienteService.excluir(clienteId);
 		
 		return ResponseEntity.noContent().build();//noContent retorna 204
 	}
