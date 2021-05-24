@@ -14,6 +14,12 @@ public class CatalogoClienteService {
 	
 	@Autowired
 	private ClienteRepository clienteRepository;
+	
+	public Cliente buscar(Long clienteId) {
+		Cliente cliente = clienteRepository.findById(clienteId)
+				.orElseThrow(() -> new NegocioException("Cliente não encontrado"));
+
+	}
 
 	//método para salvar e excluir um cliente
 	@Transactional //declara que o método deve ser executado dentro de uma transação, vai salvar ou tudo ou nada

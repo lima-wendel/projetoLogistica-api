@@ -15,12 +15,12 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @Service
 public class SolicitacaoEntregaService {
+	private CatalogoClienteService catalogoClienteService;
 	private EntregaRepository entregaRepository;
 	
 	@Transactional
 	public Entrega solicitar(Entrega entrega) {
-		Cliente cliente = clienteRepository.findById(entrega.getCliente().getId())
-				.orElseThrow(() -> new NegocioException("Cliente não encontrado"));
+		Cliente cliente = catalogoClienteService.buscar(entrega.getCliente().getId());
 		
 		//implementação das regras de entrega. Ex: horário de entrega, entrega com motoboys etc.
 		
