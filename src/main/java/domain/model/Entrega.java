@@ -36,6 +36,8 @@ public class Entrega {
 	@ManyToOne //muitas entregas possuem um cliente
 	private Cliente cliente; //propriedade cliente com ligação à classe Cliente
 	
+	@Valid
+	@NotNull
 	@Embedded //abstrai os dados para outra classe mas direciona para a mesma tabela da entidade entrega
 	private Destinatario destinatario;
 	
