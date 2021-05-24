@@ -16,7 +16,7 @@ public class CatalogoClienteService {
 	private ClienteRepository clienteRepository;
 	
 	public Cliente buscar(Long clienteId) {
-		Cliente cliente = clienteRepository.findById(clienteId)
+			return clienteRepository.findById(clienteId)
 				.orElseThrow(() -> new NegocioException("Cliente não encontrado"));
 
 	}
@@ -28,7 +28,7 @@ public class CatalogoClienteService {
 		//consultar no ClienteRepository por email
 		boolean emailEmUso = clienteRepository.findByEmail(cliente.getEmail()) 
 				.stream()
-				.anyMatch(ClienteExistente -> !clienteExistente.equals(cliente));
+				.anyMatch(clienteExistente -> !clienteExistente.equals(cliente));
 		
 		if (emailEmUso) {
 			throw new NegocioException("Já existe um cliente cadastrado com este e-mail");
