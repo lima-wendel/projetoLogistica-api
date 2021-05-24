@@ -11,7 +11,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.groups.ConvertGroup;
+import javax.validation.groups.Default;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
@@ -27,6 +30,8 @@ public class Entrega {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@ConvertGroup(from = Default.class, to = ValidationGroups.ClienteId.class) //converte de um validation group para outro
+	@Valid
 	@NotNull
 	@ManyToOne //muitas entregas possuem um cliente
 	private Cliente cliente; //propriedade cliente com ligação à classe Cliente

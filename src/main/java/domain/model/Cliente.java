@@ -7,12 +7,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.validation.groups.Default;
 
 @Entity
 public class Cliente {
 	
 	
+	@NotNull(groups = ValidationGroups.ClienteId.class)
 	@Id //define a primary key
 	@GeneratedValue(strategy = GenerationType.IDENTITY)//define a estratégia de geração da chave, neste caso é a forma nativa, que é autoincrement
 	private Long id;
