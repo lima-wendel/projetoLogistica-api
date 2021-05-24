@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
@@ -26,13 +27,14 @@ public class Entrega {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotNull
 	@ManyToOne //muitas entregas possuem um cliente
 	private Cliente cliente; //propriedade cliente com ligação à classe Cliente
 	
 	@Embedded //abstrai os dados para outra classe mas direciona para a mesma tabela da entidade entrega
 	private Destinatario destinatario;
 	
-	
+	@NotNull
 	private BigDecimal taxa;
 	
 	@Enumerated(EnumType.STRING) //"importa" como texto as propriedades do Enum
